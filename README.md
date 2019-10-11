@@ -98,8 +98,26 @@ The API should return:
 ### Business Rules
 
 - a `project` can have multiple `tasks`.
-- a `task` belongs to only one `project`.
+ 1)Add Project
+ -post to /projects
+
+ insertProject (project)
+ db("projects").insert(project);
+
+ -body will be {
+   #id will auto gen
+   name:
+   description:
+   completed: false
+ }
+ 
+ 2)Get Projects (ALL)
+ -get to /projects
+
+
+ 
 - a `project` can use multiple `resources`.
+- a `task` belongs to only one `project`.
 - the same `resource` can be used in multiple `projects`.
 
 - when adding `projects` the client must provide a name, the description is optional.
@@ -110,22 +128,58 @@ The API should return:
 
 Project:
 -uniqueID
-
--task
+-name.required
+-description
+-completed.boolean.notNull.toDefault(false)
+==> MULT tasks
+==> MULT resources
 
 Task:
--Project
+-uniqueID
+-description.required
+-notes
+-completed.boolean.notNull.toDefault(false)
+==> SINGLE Project
+-project_id (references id in project)
+
 
 Resources:
--project
+-uniqueID
+-name.required.noDuplicates
+-description
+==> MULT Project
+-project_id (references id in project)
+
+ProjectResource
+-project_id (foreign key references id in project)
+-resource_id (foreign key references id is resource)
 
 
+
+
+
+
+#Other values don't really matter because they are for only that specific table
+Testing:
+Project
+-id
+
+Task
+-id
+-project_id (references id in project)
+
+Resources
+-id
+-project_id (references id in project)
+
+ProjectResource
+-project_id (foreign key references id in project)
+-resource_id (foreign key references id is resource)
 
 
 ### Entities
 
 A `project` is what needs to be done. We want to store the following data about a `project`:
-
 - [ ] a unique Id.
 - [ ] a name. This column is required.
 - [ ] a description.
