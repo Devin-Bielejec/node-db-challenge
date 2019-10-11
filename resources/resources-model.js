@@ -5,10 +5,10 @@ module.exports = {
     getAll
 }
 
-function insert(project) {
-    return db("projects").insert(project);
+function insert(resource) {
+    return db("resources").insert(resource);
 }
 
 function getAll() {
-    return db("projects");
+    return db("resources");
 }

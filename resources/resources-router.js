@@ -1,13 +1,13 @@
 const router = require("express").Router();
-const Projects = require("./projects-model.js");
+const Resources = require("./resources-model.js");
 
 router.post("/", (req, res) => {
-    const project = req.body;
+    const resource = req.body;
 
-    Projects.insert(project)
+    Resources.insert(resource)
     .then(response => {
-        console.log("PROJECT POST", response);
-        res.status(201).json({message: "Project Created!"})
+        console.log("RESOURCE POST", response);
+        res.status(201).json({message: "RESOURCE Created!"})
     })
     .catch(err => {
         res.status(500).json({message: "Server Error", error: err})
@@ -15,10 +15,11 @@ router.post("/", (req, res) => {
 })
 
 router.get("/", (req, res) => {
-    Projects.getAll()
-    .then(projects => {
-        console.log("PROJECT GET", projects);
-        res.status(201).json({message: "Projects got!", data: projects})
+    Resources.getAll()
+    .then(resources => {
+        console.log("PROJECT GET", resources);
+
+        res.status(201).json({message: "Resources got!", data: resources})
     })
     .catch(err => {
         res.status(500).json({message: "Server Error", error: err})
