@@ -18,7 +18,17 @@ router.get("/", (req, res) => {
     Tasks.getAll()
     .then(tasks => {
         console.log("TASK GET", tasks);
-        res.status(201).json({message: "Tasks got!", data: tasks})
+
+        //changing "task_completed" to boolean
+        newTasks = tasks.map( task => {
+            if (task.task_completed === 0) {
+                return {...task, task_completed: false}
+            } else {
+                return {...task, task_completed: true}
+            }
+        })
+
+        res.status(201).json({message: "Tasks got!", data: newTasks})
     })
     .catch(err => {
         res.status(500).json({message: "Server Error", error: err})
