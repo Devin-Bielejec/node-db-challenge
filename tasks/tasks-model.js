@@ -10,5 +10,5 @@ function insert(task) {
 }
 
 function getAll() {
-    return db("projects").join("tasks", "id", "=", "project_id");
+    return db("tasks as t").innerJoin("projects as p", "p.id", "t.project_id").select("t.task_notes","t.task_completed","p.project_name","p.project_description");
 }
