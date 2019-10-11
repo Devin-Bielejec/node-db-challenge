@@ -98,28 +98,9 @@ The API should return:
 ### Business Rules
 
 - a `project` can have multiple `tasks`.
- 1)Add Project
- -post to /projects
-
- insertProject (project)
- db("projects").insert(project);
-
- -body will be {
-   #id will auto gen
-   name:
-   description:
-   completed: false
- }
- 
- 2)Get Projects (ALL)
- -get to /projects
-
-
- 
 - a `project` can use multiple `resources`.
 - a `task` belongs to only one `project`.
 - the same `resource` can be used in multiple `projects`.
-
 - when adding `projects` the client must provide a name, the description is optional.
 - when adding `resources` the client must provide a name, the description is optional.
 - when adding a `task` the client must provide a description, the notes are optional.
@@ -134,6 +115,29 @@ Project:
 ==> MULT tasks
 ==> MULT resources
 
+//
+ 1)Add Project
+ -post to /projects
+
+ insertProject (project)
+ db("projects").insert(project);
+
+ -body will be {
+   #id will auto gen
+   name:
+   description:
+   completed: false
+ }
+
+ 2)Get Projects (ALL)
+ -get to /projects
+
+  findProjects (project)
+  db("projects");
+//  
+
+
+
 Task:
 -uniqueID
 -description.required
@@ -142,6 +146,26 @@ Task:
 ==> SINGLE Project
 -project_id (references id in project)
 
+//
+1) ADD TASKS 
+
+post /tasks
+{
+  description:
+  notes:
+  completed: true or false
+  project_id:
+}
+
+db("tasks").insert(task)
+
+2) GET TASKS (include project name and description)
+
+get /tasks
+
+db("projects").join("tasks", "id", "=", "project_id")
+
+//
 
 Resources:
 -uniqueID
@@ -150,7 +174,28 @@ Resources:
 ==> MULT Project
 -project_id (references id in project)
 
+//
+1) ADD RESOURCE
+
+post /resources
+{
+  name:
+  description:
+  project_id:
+}
+
+db("resources").insert(resource);
+
+2) GET RESOURCES
+
+get /resouces
+
+db("resources")
+
+//
+
 ProjectResource
+-id
 -project_id (foreign key references id in project)
 -resource_id (foreign key references id is resource)
 
