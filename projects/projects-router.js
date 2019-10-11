@@ -1,7 +1,7 @@
 const router = require("express").Router();
-const Projects = require("./projects-model");
+const Projects = require("./projects-model.js");
 
-router.post("/projects", (req, res) => {
+router.post("/", (req, res) => {
     const project = req.body;
 
     Projects.insert(project)
@@ -14,7 +14,7 @@ router.post("/projects", (req, res) => {
     })
 })
 
-router.get("/projects", (req, res) => {
+router.get("/", (req, res) => {
     Projects.getAll()
     .then(projects => {
         console.log("PROJECT GET", projects);
@@ -24,4 +24,4 @@ router.get("/projects", (req, res) => {
         res.status(500).json({message: "Server Error", error: err})
     })
 })
-module.export = router;
+module.exports = router;
