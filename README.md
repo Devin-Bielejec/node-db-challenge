@@ -194,7 +194,7 @@ db("resources")
 
 //
 
-ProjectResource
+projects_resources
 -id
 -project_id (foreign key references id in project)
 -resource_id (foreign key references id is resource)
