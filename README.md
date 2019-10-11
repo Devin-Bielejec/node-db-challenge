@@ -200,10 +200,6 @@ projects_resources
 -resource_id (foreign key references id is resource)
 
 
-
-
-
-
 #Other values don't really matter because they are for only that specific table
 Testing:
 Project
